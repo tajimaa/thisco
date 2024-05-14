@@ -1,0 +1,218 @@
+@charset "UTF-8";
+
+html {
+  background-color: #6666FF;
+  overflow-x: hidden;
+}
+
+img {
+  margin: auto;
+  display: block;
+  position: relative;
+  top: 15px;
+}
+
+.shadow {
+  /* 親要素のスタイルを修正 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 適切な高さに調整 */
+}
+
+.form-singin {
+  background-color: #333333;
+  border-radius: 10px;
+  color: white;
+  width: 750px;
+  height: 410px;
+  margin-top: 50px;
+  position: relative;
+  top: -25px;
+}
+
+h1 {
+  text-align: center;
+  color: #B5BAC1;
+}
+
+h4 {
+  color: #B5BAC1;
+  text-align: center;
+  position: relative;
+  top: -10px;
+}
+
+.text-muted {
+  color: #B5BAC1;
+  text-align: center;
+}
+
+.p-position {
+  text-align: left;
+  margin-left: 15px;
+}
+
+.p-iphone {
+  display: none;
+}
+
+span {
+  position: relative;
+  top: -28px;
+  margin-left: 15px;
+  color: #B5BAC1;
+}
+
+p {
+  position: relative;
+  top: -30px;
+}
+
+button {
+  background-color: #5865F2;
+  color: white;
+  border-radius: 4px;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  display: block;
+  margin: 0 auto;
+  width: 270px;
+  height: 45px;
+  position: relative;
+  top: -10px;
+}
+
+.input-color {
+  background-color: #1E1F22;
+  border-radius: 10px;
+  padding: 10px;
+  width: 95%;
+  border: none;
+  outline: none;
+  color: white;
+  margin-left: 15px;
+  position: relative;
+  top: -30px;
+}
+
+.input-color:focus {
+  background-color: #1E1F22;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.none {
+  display: none;
+}
+
+.mis {
+  color: #ff7676;
+  position: relative;
+  top: -28px;
+}
+
+.regist{
+	top: -4px;
+}
+
+.registcolor {
+	color:#00A8FC;
+}
+
+/*すまほ用*/
+@media screen and (max-width: 480px) {
+  html {
+    background-color: white;
+  }
+
+  .shadow {
+    flex-direction: column; /* 子要素を縦に配置する */
+    height: auto; /* スタッキングのために高さを調整 */
+  }
+
+  .form-singin {
+    background-color: white;
+    height: 800px;
+    width: 410px;
+  }
+
+  img {
+    display: none;
+  }
+
+  h1 {
+    color: #000066;
+    font-size: 30px;
+    margin-right: 23.45px;
+  }
+
+  h4 {
+    color: #000066;
+    text-align: center;
+    position: relative;
+    font-size: 15px;
+    margin-right: 30px;
+  }
+
+  p {
+    position: absolute;
+    background-color: white;
+    margin-top: 100px;
+    height: 55px;
+  }
+
+  .p-position {
+    display: none;
+  }
+
+  .p-iphone {
+    display: block;
+    font-size: 17px;
+    top: -5px;
+    text-align: left;
+    margin-left: 15px;
+  }
+
+  button {
+    top: 25px;
+    width: 85%;
+    font-size: 25px;
+  }
+
+  .input-color {
+    width: 85%;
+    background-color: #B5BAC1;
+    position: relative;
+    height: 50px;
+    width: 92%;
+    font-size: 17px;
+    margin-top: 25px;
+  }
+
+  .input-color:focus {
+    background-color: #B5BAC1;
+    border: none;
+    outline: none;
+    color: black;
+  }
+
+  .text-muted {
+    display: none;
+  }
+  .mis{
+	  top: -10px;
+  }
+  span{
+	  top: -60px;
+	  margin-left: 20px;
+  }
+  .regist{
+	  top: -70px;
+  }
+  .registcolor{
+	  color: #00CCFF;
+  }
+}

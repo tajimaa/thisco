@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+body {
+	background-color: #33363D;
+}
+
+.cropper-view-box,
+.cropper-face {
+	border-radius: 50%;
+	cursor: grab;
+	outline: initial;
+}
+
+.cropper-bg {
+
+	background-color: #fff;
+}
+
+.cropper-face:active {
+	cursor: grabbing;
+}
+
+.cropper-dashed {
+	display: none;
+}
+
+.cropper-center {
+	display: none;
+}
+
+.cropper-point {
+	display: none;
+}
+
+.cropper-line {
+	display: none;
+}
+
+.register_card{
+	color: #70737C;
+	margin:auto;
+	margin-top: 2em;
+	padding: 2em;
+	max-width: 450px;
+	max-height: auto;
+	background-color: #2B2D31;	
+}
+.user_icon_div {
+	margin: auto;
+	margin-bottom:1em;
+}
+.user_icon {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+.edit_icon {
+	position: relative;
+	top:-27px;
+	left: 75px;
+}
+
+.btn_edit {
+	color: #8c8c8c;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+}
+.btn_edit:hover {
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+}
+.btn_edit:focus,
+.btn_edit:active {
+	background-color: rgba(0, 0, 0, 0);
+    outline: rgba(0, 0, 0, 0);
+    border: none;
+    box-shadow: none;
+}
+.input_text {
+	background-color: #1E1F22;
+	border: none;
+}
+
+.input_text {
+    background-color: #1E1F22;
+    border: none;
+    color: #fff;
+}
+
+.input_text:focus {
+    background-color: #1E1F22;
+    border-color: #8c8c8c;
+    color: #fff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.none {
+	display: none;
+  }
+  
+.mis {
+	color: #ff7676;
+	position: relative;
+}
+  
+
+
+
+
+

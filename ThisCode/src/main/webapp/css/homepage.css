@@ -1,0 +1,277 @@
+.home-nav-warper {
+    display: flex;
+}
+
+.logout {
+	text-decoration: none;
+	color: #f23f42;
+}
+
+.friend-warper label{
+    color: #fff;
+    font-weight: 700;
+}
+
+.home-item{
+    margin: 0px 8px;
+}
+
+.separator::before {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 90%;
+  
+  background-color: #3f4147;
+}
+
+.home-item-friend-button {
+    border: none;
+    border-radius: 3px;
+    background-color: #2fbb70;
+    color: #fff;
+}
+
+.home-item-all-button {
+    border: none;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #80848e;
+}
+.focus {
+    background-color: #43444b;
+    color: #fff;
+}
+
+.channel-list-friend {
+  width: 100%;
+  height: 42px;
+  padding: 0px 20px;
+  background-color: rgb(43 45 49);
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.channel-list-friend label {
+	cursor: pointer;
+}
+.channel-list-friend i {
+    margin-right: 12px;
+}
+.channel-list-friend.clicked {
+	background-color: #404249;
+	border-radius: 5px;
+}
+
+/***************フレンド登録フォーム****************/
+
+#friend-form-warper {
+    padding: 20px 30px;
+    border-bottom:1px solid #3f4147;
+}
+.friend-form {
+	padding: 0px 10px;
+	white-space: nowrap;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+	border-radius: 10px;
+    width: 100%;
+    height: 50px;
+    background-color: #1e1f22;
+}
+.ok{
+	outline: 2px solid #2fbb70;
+}
+
+.friend-form input {
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0);
+	color: #fff;
+	border: none;
+	height: 100%;
+	width: 80%;
+}
+.friend-form input:focus {
+	outline: none;
+}
+
+.friend-form button {
+	height: 30px;
+	border: none;
+	border-radius: 3px;
+	background-color: #5865f2;
+	color: #fff;
+	font-size: 0.8em;
+	padding: 2px 16px;
+	
+}
+
+/*フレンドリスト*/
+#friend-list-warpe{
+	padding: 0px 30px;
+	
+}
+
+.fland-box {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid #3f4147;
+}
+.icon-name-wrapper{
+	display: flex;
+	align-items: center;
+	
+	padding: 5px 0px;
+}
+
+.channel-fland-box{
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	padding: 0px 8px;
+	width: 100%;
+	height: 100%;
+}
+.fland-channels {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 0px;
+	margin: 2px 0px 2px 8px;
+	border-radius: 5px;
+	width: 95%;
+	height: 98%;
+}
+.fland-channels:hover {
+	
+	background-color: #404249;
+}
+
+.fland-channels.clicked {
+	background-color: #404249;
+}
+.fland-channels.clicked textIcon {
+	color: #fff;
+}
+
+.fland-channels.clicked textIcon i {
+	white-space: nowrap;
+	color: #949ba4;
+}
+
+.fland_icon_img {
+	border-radius: 50%;
+	height: 32px;
+	width: 32px;
+}
+
+.about-button{
+	width:35px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #2b2d31;
+	border-radius:50%;
+	
+}
+
+.info-wrapper {
+	position: absolute;
+	width: 417px ;
+}
+
+.info-header {
+	height: 120px;
+	background-color: #000;
+}
+
+.info-icon-user-img {
+	position: relative;
+	top: -40px;
+	left: 35px;
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	outline: 8px solid #2b2d31;
+}
+
+.info-card {
+	margin: 0px 16px 16px 16px;
+	border-radius: 8px;
+	padding: 12px;
+	background-color: #111214;
+}
+
+.info-top{
+	line-height: 17px;
+	border-bottom: 1px solid #3f4147;
+	padding: 10px 0px;
+}
+
+#info-user-name {
+	margin: 0;
+	color: #fff;
+	font-size: 17px;
+}
+
+#info-user-id {
+	margin: 0;
+	color: #b5bac1;
+	font-size: 14px;
+}
+
+
+.info-friend-count{
+	color: #fff;
+	border-bottom: 1px solid #3f4147;
+	padding: 10px 0px;
+}
+
+.info-logout {
+	color: #f23f42;
+	display: flex;
+	text-align: center;
+	padding: 10px 0px;
+}
+
+#server {
+	font-weight: 700;
+	font-size: 15px;
+	color: #fff;
+	margin-left: 10px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	width: 180px;
+	text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

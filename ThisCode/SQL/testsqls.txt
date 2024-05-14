@@ -1,0 +1,619 @@
+-- rootユーザーでの実行
+CREATE USER 'testuser1'@'localhost' IDENTIFIED BY 'password'
+COMMENT 'beginuser by noob';
+GRANT USAGE ON *.* TO 'testuser1'@'localhost';
+GRANT ALL ON *.* TO 'testuser1'@'localhost';
+
+
+-- AWS testuser1 
+CREATE USER 'testuser1'@'%' IDENTIFIED BY 'password';
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER ON *.* TO 'testuser1'@'%' WITH GRANT OPTION;
+
+UNINSTALL PLUGIN validate_password;
+
+FLUSH PRIVILEGE;
+
+mysql -u testuser1 -p -h エンドポイント
+
+
+
+-- 実行してもしなくても
+SELECT user, host FROM mysql.user;
+
+-- testuser1での実行が好ましい
+CREATE DATABASE thiscord;
+USE thiscord;
+
+drop table admin_user;
+drop table us_relationship;
+drop table message;
+drop table text_channel;
+drop table voice_channel;
+drop table server;
+drop table personal_message;
+drop table friend_relationship;
+drop table account;
+
+-- ユーザーの情報
+CREATE TABLE account (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    mailaddress VARCHAR(200) UNIQUE,
+    password VARCHAR(60),
+    user_name VARCHAR(50),
+    user_icon VARCHAR(500)
+);
+
+-- サーバーの情報
+CREATE TABLE server (
+    server_id INT AUTO_INCREMENT PRIMARY KEY,
+    server_name VARCHAR(100),
+    user_id INT,
+    server_icon VARCHAR(500),
+    FOREIGN KEY (user_id) REFERENCES account(user_id)
+);
+
+-- テキストチャンネルのデータ
+CREATE TABLE text_channel (
+	channel_id INT AUTO_INCREMENT PRIMARY KEY,
+	channel_name VARCHAR(50),
+	server_id INT,
+	FOREIGN KEY (server_id) REFERENCES server(server_id)
+);
+
+-- メッセージの履歴
+CREATE TABLE message (
+	message_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	channel_id INT,
+	send_date VARCHAR(50),
+	message VARCHAR(500),
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (channel_id) REFERENCES text_channel(channel_id)
+);
+
+-- ユーザーがどのサーバーに参加しているか
+CREATE TABLE us_relationship (
+    user_id INT,
+    server_id INT,
+    FOREIGN KEY (user_id) REFERENCES account(user_id),
+    FOREIGN KEY (server_id) REFERENCES server(server_id)
+);
+
+CREATE TABLE voice_channel (
+	channel_id INT AUTO_INCREMENT PRIMARY KEY,
+	channel_name VARCHAR(50),
+	server_id INT,
+	FOREIGN KEY (server_id) REFERENCES server(server_id)
+);
+
+-- 管理者ユーザーのデータ
+CREATE TABLE admin_user (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES account(user_id)
+);
+
+CREATE TABLE friend_relationship (
+	relation_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id1 INT,
+	user_id2 INT,
+	flag BOOLEAN,
+	FOREIGN KEY (user_id1) REFERENCES account(user_id),
+	FOREIGN KEY (user_id2) REFERENCES account(user_id)
+);
+-- 個人チャットのメッセージの履歴
+CREATE TABLE personal_message (
+	message_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	relation_id INT,
+	send_date VARCHAR(50),
+	message VARCHAR(500),
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (relation_id) REFERENCES friend_relationship(relation_id)
+);
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('tanaka@gmail.com', '$2a$12$ceg/qdoynIqywpqnwqaewOD16ra21lvILLmJx7i4trAav9bT0Nd7m', 'tanaka', 'default1.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('ojiisan@gmail.com', '$2a$12$quq.W9rYTGbGUxOV/jZpr.7/opaSv3ZSuXsM.kJisxDqjKyq0nMam', 'ojiisan', 'default2.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('saigou@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'saigou', 'default3.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kakuei@gmail.com', '$2a$12$9r6dzyrHD3SzQDhFWJsfve46c9pEDid10VjKa4pOoC2xZQgovngoC', 'kakuei', 'default4.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('yamada@gmail.com', '$2a$12$Pk2pYbyIGuNPPNa1Y83Vzum5LlAGKIWYh4Rwap/2IPg0Mg6JCAteq', 'yamada', 'default3.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('ttc@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'ttc', 'default2.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('jp@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'jp', 'default3.png');
+
+INSERT INTO server (server_name, user_id, server_icon)
+VALUES ('勉強サーバー', 1, 'default');
+
+INSERT INTO server (server_name, user_id, server_icon)
+VALUES ('おじいさん', 1, 'default');
+
+INSERT INTO server (server_name, user_id, server_icon)
+VALUES ('ゆるゲーム', 1, 'default');
+
+INSERT INTO server (server_name, user_id, server_icon)
+VALUES ('APEX', 1, 'default');
+
+INSERT INTO server (server_name, user_id, server_icon)
+VALUES ('valorant', 2, 'default');
+
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 1);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 2);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 3);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 4);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (2, 5);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 5);
+
+INSERT INTO us_relationship (user_id, server_id) 
+VALUES (2, 1);
+
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('Java', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('勉強', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('ゲーム', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 2);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 3);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 4);
+
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 5);
+
+
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 1);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('グループワーク1', 1);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('グループワーク2', 1);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('グループワーク3', 1);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 2);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 3);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 4);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 5);
+
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 2, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 3, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 4, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 5, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 6, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 7, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (3, 2, true);
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('rufy@gmail.com', '$2a$12$LuHGl/Y9k6eyAhm6f8oOx.ll3i42kgl41Mc46CGvCiNhd6j8Qykh2', 'rufy', '8.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('zoro@gmail.com', '$2a$12$h2xvAwGkzt0kTa03WNfxq.fJqqXOoEldDtF.IitZNgKBB/vjlPZ9a', 'zoro', '9.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('nami@gmail.com', '$2a$12$ocyVgu8CHWXILuFZhwLgaOyEuE0vDG1IxdSqpeSk2XvNJ6xnZuvHS', 'nami', '10.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('usopp@gmail.com', '$2a$12$9RTVWW54WNIDw6xxJK7QWepUwLcmtiHkolwGxkHexMJOkxfXYr3Mm', 'usopp', '11.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('sanji@gmail.com', '$2a$12$EI7oE0V804uNf1E3hyi2XemNdAlFV2dBSF.lY0We/HeyFvbxjbPBu', 'sanji', '12.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('chopper@gmail.com', '$2a$12$K/b3jQP5tAz05oSHmIRJpuJZSoW4lY0ENYT87xp7pdWmNQXMCbQZS', 'chopper', '13.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('robin@gmail.com', '$2a$12$zqMB/BFFesnEVdhXAHx/nuuS/U7j/580Qzq7vzg3YN7Px9LEPvrEu', 'robin', '14.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('franky@gmail.com', '$2a$12$cx8ymFwhm811HZKAcr3nA.s/1hikr.vIyccXe3LBFHA3wn67Y5MeS', 'franky', '15.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('brukku@gmail.com', '$2a$12$Ydz4WGi4HLgcA86atW0yTOONnOBPfQqWj87lL0ipH6WSZ.sUgY43q', 'brukku', '16.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('linus@gmail.com', '$2a$12$mswB8CafZlD7Rhc6uMLy..b3tfoROIkm6uhLXEmVrkl4kMJyDdN46', 'linus', '17.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('mevius@gmail.com', '$2a$12$2dSrvY45wtb3aqIbjbq6XOUTOdl1vNLB5yzhbetK8b/Gxl.ioAeKO', 'mevius', '22.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('akamaru@gmail.com', '$2a$12$MleUG1R4agiPYU1edQg8vubH8LDlEbfmCZNAyLAdHbjzPnEao/RCG', 'akamaru', '23.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('wakaba@gmail.com', '$2a$12$wr0Gw3TKuQm9/7TM1MGAeudLKCHCiy9M4.DGMWi2gnc3VJVo/MAVS', 'wakaba', '24.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('peace@gmail.com', '$2a$12$vyRKo1WyYiYZFbDIvlIkTOkHk7L6Mx1lyFQ4xggUlnthU2h4ayaZy', 'peace', '25.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hope@gmail.com', '$2a$12$KhLR/cvuurEqCCXe0oGL5ueTDCd24Gorsho/E/g8OAvZBAWUDz5Mq', 'hope', '26.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('camel@gmail.com', '$2a$12$Z50F6HfI.Lch.XFGDdeF/.Jj9JnfNYEboYS4KSScQd07QW5ar5b2y', 'camel', '27.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('winston@gmail.com', '$2a$12$Zgn66x3.5adT9UxYpsDEMuhqKQEi0TXogmcVCnT20n2G1kbbJYi0q', 'winston', '28.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kuzu@gmail.com', '$2a$12$IhK8NtQ9RkSCZm0DE/scLu.dlyrz1D3t.C282F9UhSBrF88GHelte', 'kuzu', '29.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('mebel@gmail.com', '$2a$12$98C3FSY43QWL6hej93ZKAOc9ncWK/jd5ZgvU99aCg2jAd4fPOGgAm', 'mebel', '30.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('petra@gmail.com', '$2a$12$Ghma0qk.Bw8wHs2jQjc.VOD.LQI/f7cZTRaVuuDK4EY8MtCivpXyO', 'petra', '31.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hero@gmail.com', '$2a$12$HsmIyc4bhPF9m2zyXXWiXeetoSSEBfY0IKm6yPazNFrIy33iY6UpG', 'hero', '32.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('haku@gmail.com', '$2a$12$8dbVAJsoLq9Rz45ZbeZuoOGfjLRAhHkK9EGEqWJTOUPzBajgoTiq6', 'haku', '33.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('suzu@gmail.com', '$2a$12$t83CHzTTIIlXJlLf9RxpueVMyNJtYtHCFppRpieTXlxa6ehi.h/gO', 'suzu', '34.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('naito@gmail.com', '$2a$12$SGMkMI11JhUMwnQ0CMRAz.cx5qJkiHBbbL0sD0f0/AsraRB8EFRMW', 'naito', '35.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('choki@gmail.com', '$2a$12$WLYU5uzSOJY7QBSMW5Ap6e0bd1gspAHYUaelrC1KTinElvuWk1wfG', 'choki', '36.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('megane@gmail.com', '$2a$12$0OJUYFqhwlmc7QjlHHUf3e6llIGvOB1yd.TgjoDxtdPkzBiDjJtdu', 'megane', '37.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hayato@gmail.com', '$2a$12$lgyx.XAwLSlwimCtCjS5Pu70OrbeInk2JeVBkvzlKzLWISkf3CSLa', 'hayato', '38.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('jidori@gmail.com', '$2a$12$Qef2psX/0ra7zkfhh1tyiOOBIlg/hEpVUp731JwMjrC8vxsD0A1Mm', 'jidori', '39.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('daikichi@gmail.com', '$2a$12$0PAwGoVSfZbn2810njQujeF497BSu2QMOi36h5Q7m3rpOFuyZwd5y', 'daikichi', '40.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('chukichi@gmail.com', '$2a$12$5cunMNPDvUC.cOZRjJ.VZ.570f1n48UFgzM/jv0VqRaKE.htiK80i', 'chukichi', '41.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('syokichi@gmail.com', '$2a$12$.rIioEtqIKqM6cXv5DbIKuGnXMQ06zvToA45eTC0PkJFWPCPwzeca', 'syokichi', '42.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('suekichi@gmail.com', '$2a$12$hReBd5k53Eb0KuPe1di1quGvSDlDgATk6lkL//8XmqYoyD2krvdN6', 'suekichi', '43.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('super@gmail.com', '$2a$12$XJ8Jlgplq9Ef8Wu0cdrv5OdAFH99la4qOzeqke2kJCfxF0qygXovG', 'super', '44.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('omikuji@gmail.com', '$2a$12$6GgVJIklJw94zfPUJUnXK.EuuND0/xoqzBKs5aI7VFmGywwYREtUK', 'omikuji', '45.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('back@gmail.com', '$2a$12$BW2ARjuQK5qF2A.lfO56o.x/QHazhF/9XmotIeDLVk3R4805mUowq', 'back', '46.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hunter@gmail.com', '$2a$12$CNsYGjZaJNNIGlIlN249junM7lwM16Q1fcXZzQrdZ2F6W3EyjCKdW', 'hunter', '47.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kure@gmail.com', '$2a$12$q2k4wXEXarvc54pPWvn3KeYdMwt4alqLWKZvjzt.hGa4mzAsoiVKm', 'kure', '48.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hasami@gmail.com', '$2a$12$HGz47Aug/y4SfYyOLeQQduFbNwSDhAAafITlMo4cmy5ar0fNxHLiC', 'hasami', '49.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('neko@gmail.com', '$2a$12$XtleQgGfqbk1bz12b57yf.QyqQnkWOGGhtM7IHEN0h1r3O1b0HDma', 'neko', '50.jpg');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:8', '明日の集合何時にする？');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('2', '1', '2024/1/26 14:16', '何時でもいいけど10時とか？');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:18', 'おっけー適当に行くわー');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:18', 'てか昨日発売されたマカダミアナッツ食べた？');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('2', '1', '2024/1/26 14:20', 'まだ食べてないけどおいしそうだよね');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:25', 'わし今食べてるんだけどめちゃくちゃおいしくて香りもよくて濃厚なチョコに含まれる甘みと苦みのバランスが絶妙にマッチしてて最高だよ');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:26', '食べたほうがいいこれはおいしすぎる');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('2', '1', '2024/1/26 14:29', 'めちゃくちゃ語るタイプやんおもろすぎだろ');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('2', '1', '2024/1/26 14:29', 'ボキャブラリー豊富か笑');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:42', 'わしIQ6000の男だからね');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('2', '1', '2024/1/26 14:46', 'もうその発言が頭良くないんだよな笑');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '1', '2024/1/26 14:49', 'うるさいなぁ笑');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('1', '5', '2024/1/24 23:11', '明日七時半ね');
+
+INSERT INTO personal_message (user_id, relation_id, send_date, message)
+VALUES ('6', '5', '2024/1/24 23:12', 'おけ');
+
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 18:49","やはりエジプトか 僕も同行しよう");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:07","花京院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:07","髪が伸びてきたなそろそろ切りに行こう");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:13","美容院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:17","連絡先の交換しないか このアプリ君も使ってるかい?");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:19","ラ院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:20","聞いてくれ 昨日相対性理論を発見したんだ");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:20","アインシュタ院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:20","すまない もう場所がないから次の飛行機を使ってくれ");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:30","チェック院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:30","やはりエジプトか 僕も同行しよう、嫌とは言わせないぞ");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:32","強院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:35","見てください 十円玉の裏に書かれていますよ");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:40","平等院");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (1,2,"2024/1/20 19:40","ってか、なんでこの遊びみたいなの始めたの笑笑");
+
+INSERT INTO personal_message(user_id,relation_id,send_date,message)
+VALUES (3,2,"2024/1/20 19:40","わからん笑笑");
+
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/17 13:45","ねぇ");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/17 13:48","ん?");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/17 13:50","なに");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/17 13:51","土日どっちかあいてる日ある??");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/17 13:57","なんで");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/17 15:00","カラオケ行きたくて…");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/17 15:30","え～");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/17 15:30","いけなくもないけど、モチベ次第かな");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/18 1:03","じゃあやめよう");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,1,"2024/1/18 1:03","そうだね");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/18 1:03","なかったことに");
+
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (1,2,"2024/1/1 11:11", "おはよう");
+
+INSERT INTO message(user_id,channel_id,send_date, message)
+VALUES (2,2,"2024/1/1 11:33", "こんにちは");
+
+INSERT INTO message(user_id,channel_id,send_date, message)
+VALUES (1,2,"2024/1/1 11:34", "あしたあそぼ");
+
+INSERT INTO message(user_id,channel_id,send_date, message)
+VALUES (2,2,"2024/1/1 11:40", "いまなにしてる？");
+
+INSERT INTO message(user_id, channel_id, send_date, message)
+VALUES (1,2, "2024/1/1 12:11", "こんにちは、今日はどうだった？");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (2,2,"2024/1/1 12:22", "元気そうだね！最近見た映画、面白かった？");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (1,2,"2024/1/1 12:30", "明日の授業は何ですか？？？");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (2,2,"2024/1/1 12:39", "あしたほっかいどーいきましょう");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (1,2,"2024/1/1 12:42", "ねえねえSQLおしえて");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (2,2,"2024/1/1 13:20", "なんJのバーサーカー");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (2,2,"2024/1/1 13:30", "はつもうでしたよ！");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (1,2,"2024/1/1 13:55", "大凶でしたーー。。。");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (2,2,"2024/1/1 14:30", "最近、面白いことがあった？");
+
+INSERT INTO message(user_id,channel_id, send_date, message)
+VALUES (1,2,"2024/1/1 14:45", "ねーよ");
+
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/1/27 20:22","ねぇ");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:22","なに");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/1 20:23","明日のテストの範囲ってどこらへん??");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (3,3,"2024/2/1 20:22","それな気になる");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:23","紙は???");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/1 20:23","なくした");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (3,3,"2024/2/1 20:22","あった");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/1 20:22","教えて");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:24","おっけ、ワークの３章だけ 単語のところと、章末まとめの部分やったらいいらしいあと、都道府県");
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:24","章末まとめの部分やったらいいらしいあと、都道府県");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/1 20:24","課題はあった???");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:25","課題はないけどワークテスト後に回収するらしいから埋まってないとこあったら埋めた方がいいかも");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/1 20:25","まじか!! やってなかった");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (2,3,"2024/2/2 8:15","答えないから学校で貸してほしい テスト前の自習の時間で終わらすから");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/2 8:17","おっけ");
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag)
+VALUES
+  (1, 8, true),
+  (1, 9, true),
+  (1, 10, true),
+  (1, 11, true),
+  (1, 12, true),
+  (1, 13, true),
+  (1, 14, true),
+  (1, 15, true),
+  (1, 16, true),
+  (1, 17, true),
+  (1, 18, true),
+  (1, 19, true),
+  (1, 20, true),
+  (1, 21, true),
+  (1, 22, true),
+  (1, 23, true),
+  (1, 24, true),
+  (1, 25, true),
+  (1, 26, true),
+  (1, 27, true),
+  (1, 28, true),
+  (1, 29, true),
+  (1, 30, true),
+  (1, 31, true),
+  (1, 32, true),
+  (1, 33, true),
+  (1, 34, true),
+  (1, 35, true),
+  (1, 36, true),
+  (1, 37, true),
+  (1, 38, true),
+  (1, 39, true),
+  (1, 40, true),
+  (1, 41, true),
+  (1, 42, true),
+  (1, 43, true),
+  (1, 44, true),
+  (1, 45, true),
+  (1, 46, true);
+
+
+commit;

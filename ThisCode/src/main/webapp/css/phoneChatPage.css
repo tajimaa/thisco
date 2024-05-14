@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+@media screen and (max-width: 959px) {
+	/* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+	
+	.container-fluid {
+		font-family: 'Noto Sans JP', sans-serif;
+		display: grid;
+	/*	画面サイズが変更されたらチャットフィールドのサイズがうごく*/
+		grid-template-columns: 72px 300px calc(100% - 552px) 240px;
+		grid-template-rows: 48px 1fr 1fr 1fr;
+		gap: 0px 0px;
+		grid-auto-flow: row;
+		grid-template-areas:
+			"server-list channel-header server-header  server-header"
+			"server-list channel-list chat-field member-list"
+			"server-list channel-list chat-field member-list"
+			"server-list channel-list chat-field member-list";
+		height: calc(100% - 22px);
+		padding: 0%;
+	
+	}
+}

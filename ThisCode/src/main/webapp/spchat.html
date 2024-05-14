@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./spcss/reset.css">
+    <link rel="stylesheet" href="./spcss/spPage.css">
+    <link rel="stylesheet" href="./spcss/channelList.css">
+    <link rel="stylesheet" href="./spcss/serverList.css">
+    <link rel="stylesheet" href="./spcss/chatFIeld.css">
+    <link rel="stylesheet" href="./spcss/memberList.css">
+    <link rel="stylesheet" href="./spcss/singleChat.css">
+    <link rel="stylesheet" href="./spcss/friendRegister.css">
+    <link rel="icon" type="image/x-icon" href="resource/user_icons/favicon.ico">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
+
+
+    <!-- cropperLibrary -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+        integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css"
+        integrity="sha512-bs9fAcCAeaDfA4A+NiShWR886eClUcBtqhipoY5DM60Y1V3BbVQlabthUBal5bq8Z8nnxxiyb1wfGX2n76N1Mw=="
+        crossorigin="anonymous" referrerpolicy="noreferrer" />
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.js"
+        integrity="sha512-Zt7blzhYHCLHjU0c+e4ldn5kGAbwLKTSOTERgqSNyTB50wWSI21z0q6bn/dEIuqf6HiFzKJ6cfj2osRhklb4Og=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <title>Thiscord</title>
+</head>
+
+<body class="content">
+    <div class="mainHeader"></div>
+    <div class="mainContainer container">
+
+        <div class="serverList server-scroll">
+            <div id="room-list"></div>
+
+            <div class="server-list-item">
+                <a class="plus_button" onclick="modalToggle('createServerModal')">
+                    <i class="fa-solid fa-plus fa-xl"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="channelList">
+
+            <div class="channel-title-nav"
+                style="color: #fff; padding: 0px 15px; display: flex; justify-content: space-between;">
+                <h3>
+                    <div id="server"></div>
+                </h3>
+                <div class="ellipsis">
+                    <i class="fa-solid fa-ellipsis" onclick="modalToggle('serverEditModal')"></i>
+                </div>
+
+            </div>
+
+            <div id="channelsWrapper" class="channelsWrapper">
+                <div class="channel-title-nav">
+                    <div class="flexbox">
+                        <div class="flex-item title-item">
+                            <i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">テキストチャンネル</span>
+                        </div>
+                        <div class="flex-item">
+                            <a onclick="modalToggle('createChannelModal')" class="invitation-link">
+                                <i class="fa-solid fa-plus fa-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="channels-list"></div>
+
+                <div class="channel-title-nav">
+                    <div class="flexbox">
+                        <div class="flex-item title-item">
+                            <i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">ボイスチャンネル</span>
+                        </div>
+                        <div class="flex-item">
+                            <a onclick="modalToggle('createChannelModal')" class="invitation-link"> <i
+                                    class="fa-solid fa-plus fa-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="voice-channels-list"></div>
+            </div>
+        </div>
+
+        <div class="chatField ">
+            <div class="fieldWrapper">
+                <div class="chatHeader">
+                    <a class="backButton" onclick="toggleChatField();">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+
+                    <div style="display: flex; width: 100%" onclick="modalToggle('membersListModal')">
+                        <div class="hashtag">#</div>
+                        <div id="channel" style="margin-left: 20px; width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div id="chat-scroll" class="chat-scroll">
+                    <div id="message-container" class="message-container"></div>
+                </div>
+            </div>
+            <div id="inputField" class="message-form-wrapper">
+                <div id="chat" class="message_div">
+                    <!-- <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i> -->
+                    <textarea type="text" id="message-input" class="message_input" maxlength="500" placeholder="メッセージを送信"></textarea>
+                </div>
+                <div class="buttonBack"></div>
+                <button class="send-button" onclick="sendMessage()" id="send-button">
+                    <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <div class="footer open-footer " id="footer">
+            <div class="footerItem" class="link-content">
+                <a onclick="closePage('singleChat'); closePage('myPage'); backToServer();">
+                    <i class="fa-solid fa-server"></i>
+                    <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">サーバー</p>
+                </a>
+
+            </div>
+            <div class="footerItem">
+                <a onclick="togglePageAndJoin('singleChat'); closePage('myPage'); addOldRoom();">
+                    <i class="fa-solid fa-comment"></i>
+                    <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">メッセージ</p>
+                </a>
+
+            </div>
+            <div class="footerItem">
+                <a onclick="togglePage('myPage');">
+                    <img id="footerUserIcon"></img>
+                    <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">あなた</p>
+                </a>
+            </div>
+        </div>
+
+        <!--message page-->
+        <div class="singleChat" id="singleChat">
+            <div class="singleChatHeader">
+                <h2>メッセージ</h2>
+                <a class=" invButton" onclick="modalToggle('friendRegisterModal')">フレンドを追加</a>
+            </div>
+            <div class="pageBody">
+                <div class="singleChatScroll" id="singleChatFriendList"></div>
+            </div>
+        </div>
+
+        <!-- my page -->
+        <div class="myPage " id="myPage">
+            <div class="pageBody myPageBody">
+                <div class="info-header" id="infoHeader"></div>
+                <img class="info-icon-user-img" id="infoIconUserImage">
+                <div class="info-card">
+                    <div class="info-top">
+                        <div id="info-user-name">tanaka</div>
+                        <div id="info-user-id">tanaka-1</div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-friend-count">
+                        <div style="color: #b5bac1; font-weight: 700;">Thiscordフレンド数</div>
+                        <div style="color: #fff; font-size: 1em;" id="friendCount"></div>
+                    </div>
+                </div>
+                <div class="info-card" onclick="togglePage('singleChat'); addOldRoom(); closePage('myPage'); ">
+                    <div class="infoWraper">
+                        <div class="info-title">自分のフレンド</div>
+                        <div style="display: flex; align-items: center;">
+                            <div class="myFriends" id="myFriends"></div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="info-card">
+                    <div class="info-logout">
+                        <a href="fn/logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            ログアウトする
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- popupBgCover -->
+        <div class="popupBgCover" id="popupBgCover"></div>
+    </div>
+
+    <!-- serverEditModal -->
+    <div class="serverEditModal" id="serverEditModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('serverEditModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
+                    <div style="display: flex;  align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-plus" style="display: flex; align-items: center;"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">チャンネルを作成</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467; font-weight: 700;">チャンネルを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="deleteServer()">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467;; font-weight: 700;">サーバーを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- deleteChannelModal -->
+    <div class="deleteChannelModal" id="deleteChannelModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('deleteChannelModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title">チャンネル削除</h3>
+            </div>
+            <div class="delete-modal-body">
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">テキストチャンネル</div>
+                <div class="info-card">
+                    <div id="textChannelsList"></div>
+                </div>
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">ボイスチャンネル</div>
+                <div class="info-card">
+                    <div id="voiceChannelsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- membersListModal -->
+    <div class="membersListModal" id="membersListModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('membersListModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div style="margin-left: 16px; color: #a7a8ae; font-size: 1em; font-weight: 700;">メンバー</div>
+                <div class="info-card">
+                    <div id="members-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- InvitationModal -->
+    <div class="invitation-modal" id="invitation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('invitation-modal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title">ユーザーIDを入力してフレンドを招待</h3>
+            </div>
+            <div class="invitation-body">
+                <div class="invitation-form" id="inviteForm">
+                    <div class="invitation-wrapper">
+                        <input class="invitation-input" type="text" name="userId" id="invitationInput">
+                        <input id="inputServerId" type="hidden" name="serverId">
+                        <input id="formUserId" type="hidden" name="id">
+                        <button class="invitation-button" onclick="invitationFriend()">送信</button>
+                    </div>
+                </div>
+                <div id="invFriendList"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--video modal-->
+    <div class="video_modal" id="video_modal">
+        <div class="video_modal_content">
+            <div class="video_modal_header">
+                <button id="modalToggle" class="video-close-button" onclick="modalToggle('video_modal')">
+                    <i class="fa-solid fa-angle-down" style="padding: 0;"></i>
+                </button>
+            </div>
+            <div class="video_modal_body">
+                <div class="video_play">
+                    <div id="video-play-field" class="video-play-field">
+                        <video id="local_video" class="video-element" autoplay></video>
+                    </div>
+                </div>
+            </div>
+            <div class="controller-wrapper draggable" id="draggableDiv" draggable="true">
+                <button class="contoroller-item">
+                    <i class="fa-solid fa-video fa-sm"></i>
+                </button>
+                <button class="contoroller-item-phone-slash" onclick="closeVoiceChannel(); modalToggle('video_modal');">
+                    <i class="fa-solid fa-phone-slash fa-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CreateServerModal -->
+    <div class="createServerModal " id="createServerModal">
+        <div class="modal-content">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('createServerModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">サーバーの作成</h2>
+                <p style="margin: 10px 0 10px 0;">新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できません。</p>
+            </div>
+            <div class="modal-body">
+                <div class="select-icon-container">
+                    <img id='preview' class="select-icon-img" src="/ThisCord/resource/user_icons/default2.png">
+                    <div class="plus_button_icon">
+                        <a onclick="modalToggle('editIconModal')">
+                            <i class="fa-solid fa-plus fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data"
+                    onsubmit="return false">
+                    <label for="exampleFormControlInput1" class="form-label">サーバー名</label>
+                    <input type="text" name="server_name" class="form-control input_text" id="server_name" required maxlength="20">
+
+                    <p style="margin: 20px 0px 20px 0px;">
+                        <small>サーバーを作成すると、Thiscordの<a=href="">コミュニティガイドライン</a>に同意したことになります。</small>
+                    </p>
+
+                    <input type="hidden" id="editedImageField" name="editedImage">
+                    <input type="hidden" id="MakeServerUserId" name="userId">
+
+                    <button type="button" id="form_submit" class="btn_sub"
+                        onclick="modalToggle('createServerModal'); form_clear('imageForm');">新規作成</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- editIconModal -->
+    <div class="editIconModal" id="editIconModal">
+        <div class="modal-content">
+            <div class="modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('editIconModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">アイコンの変更</h2>
+            </div>
+            <div class="modal-body" style="display: flex; justify-content: center;">
+                <div style="margin-top: 20px;">
+                    <label for="imageInput" class="custom-file-upload">
+                        ファイルを選択
+                    </label>
+                    <input type="file" id="imageInput" name="image" accept="image/*" style="display:none;">
+
+                    <div style="width: 300px; height: 300px; margin: 0 0 20px 0;">
+                        <img id="cropper-tgt" style="width: 300px; height: 300px;">
+                    </div>
+
+                    <button class="cropButton" type="button" id="cropButton"
+                        onclick="modalToggle('editIconModal')">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- createChannelModal -->
+    <div class="createChannelModal " id="createChannelModal">
+        <div class="create-channel-modal-content">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('createChannelModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">チャンネルを作成</h2>
+            </div>
+            <div class="modal-body">
+                <form class="createChannelForm" action="fn/createchannel" method="post" id="createChannelForm">
+                    <div class="formItems">
+                        <label for="channelName" style="margin-left: 20px; color: #a7a8ae;">チャンネル名</label>
+                        <input type="text" class="createChannelServerNameInput" name="channelName" id="channelName"
+                            maxlength="20" required>
+
+                    </div>
+                    <div class="formItems">
+                        <div style="margin-left: 20px; color: #a7a8ae;">チャンネルの種類</div>
+                        <fieldset class="radioWrapper">
+                            <div class="radioItems">
+                                <label for="text" class="radioItemsLabel">
+                                    <i class="fa-solid fa-hashtag radioItemsIcon" style="font-size: 1.6em;"></i>
+                                    <div style="line-height: 1.3em;">
+                                        <div style="color: #c7c8cd ; font-weight: 700;">Text</div>
+                                        <div>メッセージ、絵文字、意見、ダジャレを送れます</div>
+                                    </div>
+                                </label>
+                                <input class="createChannelRadio" type="radio" id="text" name="channelType" value="text"
+                                    checked />
+                            </div>
+                            <div class="radioItems">
+                                <label for="voice" class="radioItemsLabel">
+                                    <i class="fa-solid fa-volume-low radioItemsIcon" style="font-size: 1.6em;"></i>
+                                    <div style="line-height: 1.3em;">
+                                        <div style="color: #c7c8cd; font-weight: 700;">Voice</div>
+                                        <div>ボイス、ビデオを楽しめます</div>
+                                    </div>
+                                </label>
+                                <input class="createChannelRadio" type="radio" id="voice" name="channelType"
+                                    value="voice" />
+                            </div>
+                        </fieldset>
+                    </div>
+                    <input type="hidden" id="createChannelServerId" name="createChannelServerId">
+                    <div style="padding: 20px;">
+                        <button id="createChannelSubmitButton" type="submit" class="btn_sub">新規作成</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="friendRegisterModal" id="friendRegisterModal">
+        <div class="friendRegisterModalContent">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('friendRegisterModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">フレンドを招待</h2>
+                <div class="friend-form">
+                    <input type="number" name="userId" id="friendId">
+                    <input id="inputServerId" type="hidden" name="serverId">
+                    <input id="formUserId" type="hidden" name="id">
+                    <div>
+                        <button type="submit" onclick="sendFriendRequest();">送信</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./javascript/createServer.js"></script>
+    <script src="./javascript/values.js"></script>
+    <script src="./javascript//RGBaster.js"></script>
+    <script src="./spjavascript/spPageOperations.js"></script>
+    <script src="./spjavascript/spFetch.js"></script>
+    <script src="./spjavascript/spmulti.js"></script>
+    <script src="./spjavascript/spPersonalChatWebSocket.js"></script>
+    <script src="./spjavascript/spFriendRegist.js"></script>
+
+</body>
+
+</html>
+s

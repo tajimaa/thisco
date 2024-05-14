@@ -1,0 +1,1396 @@
+@charset "UTF-8";
+html,
+body {
+	font-family: 'Noto Sans JP', sans-serif;
+	font-family: 'Open Sans', sans-serif;
+	font-family: 'Poppins', sans-serif;
+	width: 100%;
+	height: 100%;
+	color: #70737C;
+	background-color: rgb(30 31 34);
+	/*	overflow: hidden;*/
+}
+.thiscord-title {
+	margin-bottom: 0px;
+}
+.thiscord-title h6 {
+	color: #b5bac1;
+	font-weight: 800;
+	font-size: 11px;
+	padding: 8px 0px 1px 12px;
+	margin-bottom: 0px;
+}
+/***********************画面全体のグリッド**********************/
+.flex {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+
+.container-fluid {
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+/*	画面サイズが変更されたらチャットフィールドのサイズがうごく*/
+	grid-template-columns: 72px 240px calc(100% - 552px) 240px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+
+}
+
+.home-container{
+	
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+/*	画面サイズが変更されたらチャットフィールドのサイズがうごく*/
+	grid-template-columns: 72px 240px calc(100% - 729px) 417px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
+.homepageGrid {
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+	grid-template-columns: 72px 240px calc(100% - 729px) 417px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
+.video-grid-container {
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+	grid-template-columns: 72px 240px calc(100% - 312px) 0px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
+.row {
+	height: 100%;
+}
+
+.column {
+	height: 100%;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #1A1B20;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: #2B3035;
+	border-radius: 5px;
+}
+
+
+
+
+/*サーバー一覧*/
+.server-header {
+	z-index: 1;
+	grid-area: server-header;
+	background-color: rgb(49 51 56);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+	padding: 8px;
+}
+
+.server-list {
+	grid-area: server-list;
+	background-color: rgb(30 31 34);
+	padding-top: 12px;
+}
+
+.server-list-item {
+	margin-bottom: 8px;
+}
+
+.server-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+
+.server-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+/*サーバーアイコン*/
+.server-icon {
+	display: inline-block;
+	white-space: nowrap;
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	display: flex;
+	transition: .2s ease-out;
+	text-decoration: none;
+	text-align: center;
+	color: rgb(41, 117, 75);
+}
+
+.server-icon img {
+	transition: .3s ease-out;
+	border-radius: 50%;
+}
+
+.server-icon img:hover {
+	border-radius: 35%;
+}
+
+.server-icon.clicked img {
+	border-radius: 35%;
+}
+
+.server-icon:hover {
+	border-radius: 35%;
+	background-color: #5865f2;
+}
+
+.server-icon:hover::after {
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 20px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+
+	transform: translate(-50%, -50%);
+	animation: extendFromCenterHover 0.2s ease-out;
+}
+
+.server-icon.clicked {
+	border-radius: 35%;
+	background-color: #5865f2;
+}
+
+.server-icon.clicked::after {
+	overflow: visible;
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 38px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	animation: extendFromCenter 0.2s ease-out;
+}
+
+.server-name {
+	overflow: hidden;
+	color: #f6f7fe;
+	margin: auto;
+}
+
+
+/*サーバー追加ボタン*/
+.plus_button {
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: .3s ease-out;
+	text-decoration: none;
+	color: rgb(41, 117, 75);
+}
+
+.plus_button:hover {
+	border-radius: 35%;
+	background-color: #23a559;
+}
+
+.plus_button:hover i {
+	color: #fff;
+}
+
+/*ホームボタン*/
+.home-button {
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	color: #dbdee1;
+	transition: .3s ease-out;
+}
+
+/****サーバーアイコンをホバーされたとき****/
+.home-button:hover {
+
+	border-radius: 35%;
+	background-color: #5865f2;
+
+}
+
+.home-button:hover::after {
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 20px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+
+	transform: translate(-50%, -50%);
+	animation: extendFromCenterHover 0.2s ease-out;
+}
+
+/*アニメーションのキーフレーム*/
+@keyframes extendFromCenterHover {
+	from {
+		height: 0;
+		width: 0;
+	}
+
+	to {
+		height: 20px;
+		width: 8px;
+	}
+}
+
+/****サーバーアイコンをクリックされたとき****/
+.home-button.clicked {
+	position: relative;
+	border-radius: 35%;
+	background-color: #5865f2;
+}
+
+.home-button.clicked::after {
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 38px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	animation: extendFromCenter 0.2s ease-out;
+}
+
+/*アニメーションのキーフレーム*/
+@keyframes extendFromCenter {
+	from {
+		height: 0px;
+		width: 0px;
+	}
+
+	to {
+		height: 38px;
+		width: 8px;
+	}
+}
+
+/*セパレーター疑似要素*/
+.guildSeparator {
+	margin: auto;
+	height: 2px;
+	width: 32px;
+	border-radius: 1px;
+	background-color: #35363c;
+}
+
+
+
+
+/******************チャンネル一覧*********************/
+
+.channel-header {
+	padding: 0;
+	z-index: 1;
+	grid-area: channel-header;
+	background-color: rgb(43 45 49);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 16px 12px 16px;
+}
+
+#server {
+	font-weight: 700;
+	font-size: 15px;
+	color: #fff;
+	margin-left: 10px;
+}
+
+.channel-list {
+	grid-area: channel-list;
+	background-color: rgb(43 45 49);
+}
+
+.channel-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 87.5%;
+}
+
+.channel-title-nav {
+	text-decoration: none;
+	color: #949ba4;
+}
+
+.channel-title {
+	display: flex;
+	margin-left: 10px;
+	align-items: center;
+	font-size: 0.8em;
+	font-weight: 700;
+}
+
+.flexbox {
+	padding: 3px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.title-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #949ba4;
+}
+
+.invitation-link {
+	color: #949ba4;
+	cursor: pointer;
+}
+.invitation-link:hover {
+	color: rgb(219 222 225);
+}
+
+.text-channels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1em;
+	font-weight: 500;
+	height: 34px;
+	width: 215px;
+	align-items: center;
+	padding: 6px 8px 6px 8px;
+
+	margin-top: 2px;
+	border-radius: 5px;
+}
+
+.voice-channel-linc{
+	text-decoration: none;
+	cursor: pointer;
+	color: #909ba4;
+	width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.text-channels:hover {
+	
+	background-color: #404249;
+}
+
+.text-channels.clicked {
+	background-color: #404249;
+}
+
+.textIcon {
+	width: 100%;
+	text-decoration: none;
+	color: #949ba4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-channels.clicked textIcon {
+	color: #fff;
+}
+
+.text-channels.clicked textIcon i {
+	white-space: nowrap;
+	color: #949ba4;
+}
+
+.invitationIcon{
+
+	color: #949ba4;
+	white-space: nowrap;
+}
+
+.invitationIcon:hover{
+	
+	
+	color: #fff;
+	
+}
+/************ログインしてるユーザーのフィールド*************/
+.user-info {
+	position: absolute;
+	bottom: 0;
+
+}
+
+/*通話の切断ミュートなどのインターフェイス*/
+.media-interface {
+	height: 90px;
+	padding: 8px;
+	background-color: #232428;
+	border-bottom: 1px solid #37393f;
+}
+
+.interface-item-i {
+	background-color: rgba(0, 0, 0, 0);
+	color: #b5bac1;
+	text-decoration: none;
+	border-radius: 5px;
+	border: none;
+	padding: 5px;
+	height: 32px;
+	width: 32px;
+
+	justify-content: center;
+}
+
+.interface-item-i:hover {
+	background-color: #313338;
+}
+
+.interface-item-button {
+	background-color: #313338;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+	border: none;
+	padding: 5px;
+	width: 100px;
+	height: 32px;
+}
+
+.interface-item-button:hover {
+	background-color: #2a2c30;
+}
+
+/*通史のステータス*/
+#status {
+	color: #23a559;
+	font-weight: 700;
+	font-size: 1em;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+
+#target {
+	font-size: 12px;
+	color: #b5bac1;
+}
+
+/*ユーザーの情報*/
+.user-field {
+	width: 240px;
+	height: 52px;
+	margin-bottom: 0;
+	background-color: #232428;
+	padding: 0px 8px 0px 8px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+}
+
+.user-box {
+	display: flex;
+	align-items: center;
+}
+
+#user-name {
+	margin: 0;
+	color: #fff;
+	font-size: 13px;
+}
+
+#user-id {
+	margin: 0;
+	color: #b5bac1;
+	font-size: 11px;
+}
+
+.user-field img {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+
+.buttns {
+	font-size: 18px;
+	width: 98px;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+}
+
+/*********************チャットフィールド**********************/
+#channel {
+	font-weight: 500;
+	font-size: 1.2em;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chat-field {
+	grid-area: chat-field;
+	background-color: rgb(49 51 56);
+	position: relative;
+	padding-left: 15px;
+}
+
+.chat-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 86%;
+}
+
+.chat-icon {
+	white-space: nowrap;
+	position: absolute;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	margin-right: 15px;
+	top: 20px;
+	left: 9px;
+}
+
+.chat-name {
+	font-size: 20px;
+}
+
+.channle-name {
+	white-space: nowrap;
+	font-weight: 700;
+	color: #fff;
+}
+
+.hash-tag {
+	font-size: 1.5em;
+	color: #80848e;
+}
+
+.message-flexbox {
+	padding: 3px;
+	display: flex;
+	/*  	justify-content: space-between;*/
+}
+
+#message-container {
+	width: 100%;
+	height: 100%;
+}
+
+.message-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 2px 48px 2px 66px;
+	width: 100%;
+
+}
+
+.wrapper-item {
+	padding-top: 16px;
+	width: 100%;
+}
+
+.message-user-name {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 500;
+	margin-right: 5px;
+}
+
+.message-date {
+	font-size: .75rem;
+	color: #949ba4;
+}
+
+/**/
+.input-container {
+	width: 100%;
+}
+
+.message-form-wrapper{
+	width: 100%;
+	padding: 0px 16px 0px 16px;
+	height: 68px;
+	position: absolute;
+    bottom: 0;
+}
+.message_div {
+	display: flex;
+	border-radius: 5px;
+	background-color: #383a40;
+	height: 44px;
+	margin-bottom: 24px;
+	padding: 0px 16px 0px 16px;
+	bottom: 0;
+	width: 100%;
+	align-items: center;
+	
+}
+.message_input {
+	background-color: rgba(0, 0, 0, 0);
+	padding: 11px;
+	width: 100%;
+	height: 100%;
+	border: none;
+	color: rgb(219 222 225);
+	resize: none;
+	overflow: hidden;
+}
+
+.message_input:focus {
+	border: none;
+	outline: none;
+}
+
+/*********************videoチャットの画面***********************/
+.noChat {
+
+	/*	background-color: rgba(0, 0, 0, 1);*/
+}
+
+
+/************************************メンバーリスト****************************************/
+.member-list {
+	grid-area: member-list;
+	background-color: rgb(43 45 49);
+}
+
+.member-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+.meber-list-title {
+	font-size: 14px;
+	font-weight: 500;
+	color: #949ba4;
+	padding: 16px 0px 0px 8px;
+}
+
+.member-wrapper {
+	display: flex;
+	align-items: center;
+	height: 44px;
+	padding: 1px 8px 1px 8px;
+}
+
+.member-icon {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+
+.member-name {
+	
+	color: #949ba4;
+	font-size: 15px;
+	margin-left: 12px;
+}
+.server-host {
+	position: relative;
+	top: 2px;
+	color: #f0b132;
+	margin-left: 4px;
+	font-size: 10px;
+}
+
+
+/*チャンネル一覧の左上を丸くする*/
+.radius-lefttop {
+	border-radius: 5px 0px 0px 0px;
+}
+
+/*form*/
+.formcss {
+	width: 99%;
+	height: 37px;
+	bottom: 10px;
+	display: flex;
+	background-color: rgb(49 51 56);
+}
+
+/*formのtext入力の体裁*/
+.formcss input {
+	background-color: #40454B;
+	/*(後々修正)色が正確じゃない*/
+	border-radius: 10px 10px 10px 10px;
+	outline: none;
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+
+.text-color {
+	color: rgb(219 222 225);
+}
+
+.text-center {
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.text-box {
+	padding: 0px 10px 0px 10px;
+	text-align: left;
+}
+
+.text-maxwidth {
+	max-width: 90%;
+}
+
+
+
+
+
+
+/****************************************** モーダルのcss ******************************************/
+
+/*cropper.jsのcss*/
+.cropper-view-box,
+.cropper-face {
+	border-radius: 50%;
+	cursor: grab;
+	outline: initial;
+}
+
+.cropper-bg {
+
+	background-color: #fff;
+}
+
+.cropper-face:active {
+	cursor: grabbing;
+}
+
+.cropper-dashed {
+	display: none;
+}
+
+.cropper-center {
+	display: none;
+}
+
+.cropper-point {
+	display: none;
+}
+
+.cropper-line {
+	display: none;
+}
+
+
+
+
+.close-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #fff;
+	z-index: 2;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 20px;
+	height: 20px;
+	background-color: #26262f;
+	border: #323437 1px solid;
+	border-radius: 50%;
+}
+
+.deleteButton {
+	white-space: nowrap;
+	background-color: #26262f;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-weight: 700;
+}
+
+.textIcon {
+	width: 100%;
+	text-decoration: none;
+	color: #949ba4;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.serverEditModal {
+	position: fixed;
+	z-index: 100;
+	left: 82px;
+	top: 120%;
+	height: 0;
+	width: 220px;
+	margin: 0 auto;
+	background-color: #1e1f22;
+	display: none;
+	border-radius: 5px;
+}
+
+.serverEditModal.open{
+	top: 80px;
+	height: 350px;
+	display: inline;
+}
+.serverEditModalContent {
+	bottom: 0;
+	position: absolute;
+	justify-content: center;
+	height: 85%;
+	width: 100%;
+	background-color: #1c1d22;
+}
+
+
+.deleteChannelModal{
+	position: fixed;
+	z-index: 100;
+	left: 80px;
+	top: 120%;
+	height: 0;
+	width: 300px;
+	margin: 0 auto;
+	background-color: #1e1f22;
+	display: none;
+	border-radius: 20px;
+}
+
+.deleteChannelModal.open{
+	top: 80px;
+	height: 350px;
+	display: inline;
+}
+
+
+
+
+
+/*cardのcss*/
+.register_card {
+	color: #70737C;
+	margin: auto;
+	margin-top: 2em;
+	padding: 2em;
+	max-width: 360px;
+	max-height: auto;
+	background-color: #2B2D31;
+}
+
+.select-icon-container {
+	margin: auto;
+	margin-bottom: 1em;
+}
+
+.select-icon-img {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+.plus_button_icon {
+	cursor: pointer;
+	position: relative;
+	background-color: #5865f2;
+	width: 30px;
+	height: 30px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: -100px;
+	right: -56%;
+}
+
+.plus_button_icon a i {
+	color: #fff;
+	text-decoration: none;
+
+}
+
+.input_text {
+	background-color: #1E1F22;
+	border: none;
+	height: 45px;
+	color: rgb(219 222 225);
+}
+
+.input_text:focus {
+	background-color: #1E1F22;
+	border-color: #1E1F22;
+	color: rgb(219 222 225);
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+}
+.channel_input_text {
+	background-color: #1E1F22;
+	border: none;
+	height: 45px;
+	color: rgb(219 222 225);
+}
+
+.channel_input_text:focus {
+	background-color: #1E1F22;
+	border-color: #1E1F22;
+	color: rgb(219 222 225);
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+}
+
+.modal-content2 {
+	border-radius: 6px;
+	padding: 2em;
+	height: 500px;
+	background: linear-gradient(to top, rgb(49, 51, 56) 0%, rgb(49, 51, 56) 30%, #313338 30%, #313338 100%);
+}
+
+.modal-title2 {
+	font-size: 2em;
+	font-weight: 700;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.slide {
+	animation-duration: 0.5s;
+	animation-name: slidein;
+  }
+  
+  @keyframes slidein {
+	from {
+	  margin-bottom: 100%;
+	  height: 0%;
+	}
+  
+	to {
+	  margin-bottom: 0%;
+	  height: 350px;
+	}
+  }
+.slide_children {
+	animation-duration: 0.5s;
+	animation-name: slideinc;
+  }
+  
+  @keyframes slideinc {
+	from {
+	  margin-bottom: 100%;
+	  height: 0%;
+	}
+  
+	to {
+	  margin-bottom: 0%;
+	  height: 100%;
+	}
+  }
+.modal-channel {
+	width: 428px;
+	height: 480px;
+	margin: auto;
+	padding: 16px;
+	background-color: rgb(49 51 56);
+}
+.modal-channel h1 {
+	font-size: 20px;
+	color: #f2f3f5;
+	text-align: left;
+	margin: 0px;
+}
+.modal-channel p {
+	text-align:left;
+}
+
+.btn-close2 {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+
+}
+.back-botan{
+	cursor: pointer;
+}
+
+.center_content {
+	text-align: center;
+
+}
+
+.form-label {
+	color: #333;
+	font-weight: 500;
+}
+
+.back {
+	font-size: 17px;
+	font-weight: 500;
+	color: #333;
+	position: absolute;
+	bottom: 20px;
+	left: 2em;
+}
+
+.con {
+	background-color: #caccce;
+	width: 100%;
+}
+
+.sub {
+	position: absolute;
+	bottom: 15px;
+	right: 2em;
+}
+
+.btn_sub {
+	height: 40px;
+	width: 100px;
+	background-color: #5865f2;
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+}
+
+.server_icon {
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+}
+
+.input_div {
+	background-color: rgb(56 58 64);
+	border-radius: 13px;
+	margin: 0px 15px 0px 15px;
+	position: absolute;
+	/*←絶対位置*/
+	bottom: 0;
+	/*下に固定*/
+}
+
+.input_div i {
+	margin-left: 15px;
+	color: rgb(219 222 225);
+}
+
+.edit-modal{
+	height: 550px;	
+}
+
+/*javascriptで付け足すもの*/
+
+.none {
+	display: none;
+}
+
+
+/******************invitation-content*******************/
+.close {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.close:hover {
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+.invitation-content {
+    background-color: #313338;
+    color: #fff;
+    padding-bottom: 20px;
+    height: 400px;
+
+}
+
+.invitation-body {
+    padding: 0px 8px 0px 16px;
+    border: none;
+    height: 150px;
+    position: relative;
+}
+
+#invitationIconModal .modal-content {
+    border: none;
+}
+
+#invitationIconModal .modal-header,
+#invitationIconModal .modal-footer {
+    border: none;
+}
+
+.invitation-form {
+    padding: 0px 15px 0px 15px;
+/*    position: absolute;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.invitation-wrapper {
+    position: relative;
+    background-color: #1e1f22;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.invitation-input {
+    position: absolute;
+    left: 5px;
+    border: none;
+    background-color: #1e1f22;
+    color: #fff;
+    width: 80%;
+}
+
+.invitation-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.invitation-button {
+    position: absolute;
+    right: 4px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    color: "#fff;";
+    width: 75px;
+    height: 32px;
+}
+
+.inv-friend-button{
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+}
+.inv-friend-button:hover {
+	border-radius: 5px;
+	background-color: #404249;
+}
+
+#invFriendList {
+	margin-top: 20px;
+	height: 200px;
+	overflow-y: scroll;
+}
+
+
+/******************************ビデオチャットの時の画面**********************************/
+.video-container {
+	display: grid;
+	grid-template-columns: 72px 240px calc(100% - 312px);
+	grid-template-rows: 48px 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+}
+
+/* .channel-list.video-chat { grid-area: 2 / 2 / 4 / 3; } 
+.server-list.video-chat  { grid-area: 1 / 1 / 4 / 2; }
+.channel-header.video-chat  { grid-area: 1 / 2 / 2 / 3; } */
+
+
+.video-field {
+	z-index: 2;
+	grid-area: 1 / 3 / 8 / 4;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+}
+
+.video-container {
+	height: 96%;
+	margin: 0;
+}
+
+.video-play-field {
+	width: 100%;
+	min-width: 600px;
+    height: 100%;
+	padding: 3px;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	overflow-y: scroll;
+}
+
+.video-element {
+	display:block;
+    border-radius: 10px;
+    min-width: 584px;
+    height: 321.500px;
+    background-color: #202125;
+    object-fit: cover;
+    margin:0px 5px 0px 5px;
+    margin-bottom: 10px;
+}
+
+
+
+.video-controller {
+	width: 100%;
+	position: relative;
+	bottom: 10%;
+	
+}
+
+.controller-wrapper {
+	display: flex;
+	justify-content: center;
+	
+}
+
+.contoroller-item {
+	background-color: #232428;
+	color: #fff;
+	border-radius: 50%;
+	border: none;
+	height: 56px;
+	width: 56px;
+	margin: 0px 8px 0px 8px;
+}
+
+.contoroller-item-phone-slash {
+	background-color: #ed4245;
+	color: #fff;
+	border-radius: 50%;
+	border: none;
+	height: 56px;
+	width: 56px;
+	margin: 0px 8px 0px 8px;
+}
+
+.voice-channel-member{
+	display: flex;
+	align-items: center;
+	padding: 2px 0px 6px 36px;
+}
+
+.voice-channel-icon {
+	border-radius: 50%;
+	height: 24px;
+	width: 24px;
+	margin-right: 8px;
+}
+.voice-channel-user {
+	color: #9097a0;
+	font-size : 13px;
+}
+
+.message-text {
+	width: 100%;
+	overflow-wrap: break-word;
+}
+
+.message-date-section-wrapper{
+	display: flex;
+	margin-top: 20px;
+}
+
+.message-date-section {
+	margin: auto;
+	height: 2px;
+	width: 35%;
+	border-radius: 1px;
+	background-color: #54565f;
+}
+
+
+#santen {
+	cursor:pointer;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+}
+
+
+
+
+
+
+
+
+
+
+

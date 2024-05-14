@@ -1,0 +1,51 @@
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="icon"  type="image/x-icon" href="resource/user_icons/favicon.ico">
+	<!--画面拡大できない -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,
+		minimum-scale=1,maximum-scale=1,user-scalable=no">
+	
+	<title>login</title>
+</head>
+
+
+<body class="text-center" style="font-family: 'Noto Sans JP', sans-serif">
+
+	<div class="shadow">
+		<form class="form-singin" action="fn/login" method="post">
+			<img src="resource/user_icons/default1.png" alt="" width="72" height="72">
+			<h1>おかえりなさい！</h1>
+			<h4>またお会いしましたね！</h4>
+			<!-- スマホ用-->
+			<span class="p-iphone">アカウント情報</span>
+			<!-- PC用-->
+			<span id="color" class="p-position">メールアドレス</span>			
+			<span id="miss" class="none mis">- メールアドレスが無効です。</span>
+			<input type="email" name="email" id="inputEmail"
+				class="input-color" placeholder="メールアドレス" required autofocus> 
+			<span id="colors" class="p-position ">パスワード</span>
+			<span class="p-iphone"></span>
+			<span id="misss" class="none mis">- パスワードが無効です</span>
+			<input type="password" name="password" id="inputPassword"
+				class="input-color" placeholder="パスワード" required>
+			<button type="submit">ログイン</button>
+			<span class="regist">アカウントが必要ですか？<a class="registcolor" href="regist.jsp">登録</a></span>
+			<p class="text-muted">&copy; 2023</p>
+		</form>
+	</div>
+
+	<!-- Google-login -->
+<script>
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('miss')) {
+		document.getElementById('miss').classList.remove('none');
+		document.getElementById('misss').classList.remove('none');
+		document.getElementById('color').classList.add('mis');
+		document.getElementById('colors').classList.add('mis');
+    }
+</script>
+</body>
+</html>

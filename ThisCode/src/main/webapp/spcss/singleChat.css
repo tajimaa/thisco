@@ -1,0 +1,185 @@
+.singleChat{
+	position: fixed;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+    background-color: #23252a;
+}
+
+.singleChat.openPage{
+    z-index: 1;
+    top: 0;
+    height: 100%;    
+
+}
+.singleChatHeader {
+    display: flex;
+	justify-content: space-between;
+    padding: 20px 10px 10px 20px;
+    border-bottom: #4c4f56 1px groove;
+    color: #fff;
+}
+
+.singleChatFriendList {
+    
+}
+
+.singleChatScroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 85%;
+}
+
+.singleChatScroll::-webkit-scrollbar {
+	display: none;
+}
+
+.friendregiststyle {
+	text-align: right;
+	margin: 5px 0px 0px 125px;
+}
+
+.pageBody {
+    height: 100%;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+	background-color: #1c1d22;
+}
+
+.friendListItem {
+    display: flex;
+    width: 100%;
+	text-decoration: none;
+    padding: 5px 0px 5px 0px;
+}
+
+.singleChatIconImage {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+#single-user-name{
+	text-decoration: none;
+    font-weight: 700;
+    color: #fff;
+}
+
+#single-user-id{
+	text-decoration: none;
+    font-weight: 500;
+
+}
+
+
+/* my page */
+.myPage {
+    position: fixed;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+    background-color: #1c1d22;
+}
+
+.myPage.openPage{
+    z-index: 1;
+    top: 0;
+    height: 100%;    
+}
+
+.myPageBody{
+    padding: 0;
+	background-color: #1c1d22;
+}
+
+info-wrapper {
+	position: absolute;
+	width: 417px ;
+}
+
+.info-header {
+	height: 120px;
+	background-color: #000;
+}
+
+.info-icon-user-img {
+	position: relative;
+	top: -40px;
+	left: 35px;
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	outline: 8px solid #1c1d22;
+}
+
+.info-card {
+	margin: 0px 16px 16px 16px;
+	border-radius: 14px;
+	padding: 12px;
+	background-color: #26262f;
+	border: #323437 1px solid;
+}
+
+.info-items {
+	margin: 8px 16px 8px 16px;
+	border-radius: 30px;
+	padding: 8px;
+	background-color: #1c1d22;
+	border: #323437 1px solid;
+}
+
+.info-top{
+	line-height: 2em;
+	
+	padding: 10px 0px;
+}
+
+#info-user-name {
+	margin: 0;
+	color: #fff;
+	font-size: 2em;
+	font-weight: 700;
+}
+
+#info-user-id {
+	margin: 0;
+	color: #b5bac1;
+	font-size: 1em;
+}
+
+
+.info-friend-count{
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.infoWraper{
+	display : flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #b5bac1;
+	font-weight: 700;
+}
+
+.myFriends {
+	display: flex;
+	margin-right: 10px;
+}
+
+.myFriendsIcon {
+	border-radius: 50%;
+	width: 25px;
+	outline: #26262f 5px solid;
+	
+}
+
+.info-logout {
+	color: #f23f42;
+	display: flex;
+	text-align: center;
+	
+}

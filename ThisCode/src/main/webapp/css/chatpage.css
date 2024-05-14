@@ -1,0 +1,279 @@
+@charset "UTF-8";
+
+body{
+	font-family: 'Noto Sans JP', sans-serif ;
+}
+
+.server-header {
+	z-index: 1;
+	grid-area: server-header;
+	background-color: rgb(49 51 56);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+	padding: 8px;
+}
+
+.server-list {
+	grid-area: server-list;
+	background-color: rgb(30 31 34);
+	padding-top: 12px;
+}
+
+.server-list-item {
+	margin-bottom: 8px;
+}
+
+.server-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+
+.server-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+.plus_button{
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+.plus_button a {
+	top: 10px;
+	color: #23a559;
+	text-decoration: none;
+	
+}
+
+/*cropper.jsのcss*/
+
+.cropper-view-box,
+.cropper-face {
+	border-radius: 50%;
+	cursor: grab;
+	outline: initial;
+}
+
+.cropper-bg {
+
+	background-color: #fff;
+}
+
+.cropper-face:active {
+	cursor: grabbing;
+}
+
+.cropper-dashed {
+	display: none;
+}
+
+.cropper-center {
+	display: none;
+}
+
+.cropper-point {
+	display: none;
+}
+
+.cropper-line {
+	display: none;
+}
+
+.register_card{
+	color: #70737C;
+	margin:auto;
+	margin-top: 2em;
+	padding: 2em;
+	max-width: 360px;
+	max-height: auto;
+	background-color: #2B2D31;	
+}
+.user_icon_div {
+	margin: auto;
+	margin-bottom:1em;
+}
+.user_icon {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+.plus_button_icon{
+	position: relative;
+	background-color: #5865f2;
+	width: 30px;
+	height: 30px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+    top: -100px;
+    right: -56%;
+}
+.plus_button_icon a i{
+	color: #fff;
+	text-decoration: none;
+	
+}
+
+.input_text {
+    background-color:#caccce;
+    border: none;
+    height: 45px;
+    color: #fff;
+}
+
+.input_text:focus {
+    background-color: #caccce;
+    border-color: #caccce;
+    color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+}
+
+.modal-content {
+	border-radius: 6px;
+	padding: 2em;
+	min-height: 550px;
+}
+
+.modal-title {
+	font-size: 2em;
+	font-weight: 700;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.btn-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	
+}
+
+.center_content {
+	text-align: center;
+	
+}
+
+
+.form-label {
+	color: #333;
+	font-weight: 500;
+}
+
+.back {
+	font-size: 17px;
+	font-weight: 500;
+	color: #333;
+	position: absolute;
+	bottom: 20px;
+	left: 2em;
+}
+.con {
+	background-color:#caccce;
+	width: 100%;
+}
+
+.sub {
+	position: absolute;
+	bottom: 15px;
+	right: 2em;
+}
+.btn_sub {
+	height: 40px;
+	width: 100px;
+	background-color: #5865f2;
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+}
+
+.modal-content {
+    background: linear-gradient(to top, rgb(228, 230, 233) 0%, rgb(228, 230, 233) 13%, #fff 13%, #fff 100%);
+}
+
+
+.server_icon {
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+}
+
+.input_div {
+	background-color: rgb(56 58 64);
+	border-radius: 13px;
+	margin: 0px 15px 0px 15px;
+	position: absolute;/*←絶対位置*/
+    bottom: 0; /*下に固定*/
+}
+
+.input_div i {
+	margin-left: 15px;
+	color: rgb(219 222 225);
+}
+
+/*チャンネルのタイトル*/
+.channel-title {
+	
+}
+
+.fa-plus {
+	
+	color: #70737C;
+}
+.channels-list-item {
+	padding: 5px;
+}
+.channels-list-item:hover{
+	border-radius: 5px;
+	background-color: rgb(77, 80, 89);
+}
+
+.message_input {
+	background-color: rgba(0, 0, 0, 0);
+	padding: 10px;
+	width: 100vh;
+	height: 50px;
+	border: none;
+	color: rgb(219 222 225);
+}
+
+
+.message_input:focus {
+	border: none;
+	outline: none;
+}
+
+.user_view {
+	background-color: #232428;
+	height: 52px;
+	display: flex;
+  	align-items: center;
+  	
+    
+    
+  	
+}
+.user_icon_img {
+	height: 32px;
+	width: 32px;
+	margin-left:10px;
+	border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

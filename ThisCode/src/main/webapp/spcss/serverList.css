@@ -1,0 +1,120 @@
+.serverList {
+    background-color: #1e1f22;
+    min-width: 72px;
+    height: 100%;
+}
+
+.server-list-item {
+	margin-bottom: 8px;
+}
+
+.server-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 90%;
+}
+
+.server-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+/*サーバーアイコン*/
+.server-icon {
+	display: inline-block;
+	white-space: nowrap;
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	display: flex;
+	transition: .2s ease-out;
+	text-decoration: none;
+	text-align: center;
+	color: rgb(41, 117, 75);
+}
+
+.server-icon img {
+	transition: .3s ease-out;
+	border-radius: 50%;
+}
+
+.server-icon img:hover {
+	border-radius: 35%;
+}
+
+.server-icon.clicked img {
+	border-radius: 35%;
+}
+
+.server-icon:hover {
+	border-radius: 35%;
+	background-color: #5865f2;
+}
+
+.server-icon:hover::after {
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 20px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+
+	transform: translate(-50%, -50%);
+	animation: extendFromCenterHover 0.2s ease-out;
+}
+
+.server-icon.clicked {
+	border-radius: 35%;
+	background-color: #5865f2;
+}
+
+.server-icon.clicked::after {
+	overflow: visible;
+	content: '';
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 4px 4px 0;
+	height: 38px;
+	width: 8px;
+	left: -12px;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	animation: extendFromCenter 0.2s ease-out;
+}
+
+.server-name {
+	overflow: hidden;
+	color: #f6f7fe;
+	margin: auto;
+}
+
+/*サーバー追加ボタン*/
+.plus_button {
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: .3s ease-out;
+	text-decoration: none;
+	color: rgb(41, 117, 75);
+}
+
+.plus_button:hover {
+	border-radius: 35%;
+	background-color: #23a559;
+}
+
+.plus_button:hover i {
+	color: #fff;
+}
